@@ -1,7 +1,7 @@
 # m3u8 視頻在線提取工具([English version](https://github.com/Momo707577045/m3u8-downloader/blob/master/README-EN.md))
 
 ![界面](http://upyun.luckly-mjw.cn/Assets/m3u8-download/01.jpeg)
-### [工具在線地址](http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html)，推薦使用 chrome 瀏覽器。
+### [工具在線地址](https://m3u8-downloader.glitch.me)，推薦使用 chrome 瀏覽器。
 
 ### 研發背景
 - m3u8視頻格式簡介
@@ -125,7 +125,7 @@
 - 本人已 fork 該項目，並修覆該 bug，修覆後的項目[鏈接在這里](https://github.com/Momo707577045/mux.js)
 
 ### 第三方接入
-- 在 url 中通過 source 參數拼接下載地址即可，如：```http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html?source=http://1257120875.vod2.myqcloud.com/0ef121cdvodtransgzp1257120875/3055695e5285890780828799271/v.f230.m3u8```
+- 在 url 中通過 source 參數拼接下載地址即可，如：```https://m3u8-downloader.glitch.me?source=http://1257120875.vod2.myqcloud.com/0ef121cdvodtransgzp1257120875/3055695e5285890780828799271/v.f230.m3u8```
 - 系統將自動解析該參數
 
     ![](http://upyun.luckly-mjw.cn/Assets/m3u8-download/16.jpeg)
