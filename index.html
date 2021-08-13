@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="keywords" content="m3u8 downloader for web">
-  <meta name="description" content="m3u8 downloader for web, SAOJSM">
-  <title>m3u8 downloader</title>
+  <meta name="keywords" content="m3u8 downloader tradional chinese for web">
+  <meta name="description" content="m3u8 downloader tradional chinese for web, SAOJSM">
+  <title>m3u8 downloader tradional chinese</title>
   <style>
   /*全局設置*/
   html, body {
@@ -336,7 +336,7 @@
 <section id="m-app" v-cloak>
   <!--頂部操作提示-->
   <section class="m-p-action g-box">{{tips}}</section>
-  <a class="m-p-github" target="_blank" href="https://github.com/SAOJSM/m3u8-downloader">github</a>
+  <a class="m-p-github" target="_blank" href="https://github.com/SAOJSM/m3u8-downloader-cht">github</a>
 
   <!--文件載入-->
   <div class="m-p-temp-url">測試連結：https://vod-normal-global-cdn-z01.afreecatv.com/v3/mapped-vod/save01/afreeca/station/2021/0811/16/1628668696129310.php/live/0/index-f3-v1-a1.m3u8</div>
@@ -378,9 +378,9 @@
   
 </body>
 <!--vue 前端框架-->
-<script src="https://m3u8-downloader.glitch.me/vue.js"></script>
-<script src="https://m3u8-downloader.glitch.me/aes-decryptor.js"></script>
-<script src="https://m3u8-downloader.glitch.me/mux-mp4.js"></script>
+<script src="https://m3u8-downloader-cht.glitch.me/vue.js"></script>
+<script src="https://m3u8-downloader-cht.glitch.me/aes-decryptor.js"></script>
+<script src="https://m3u8-downloader-cht.glitch.me/mux-mp4.js"></script>
 
 <script>
 // script注入
@@ -510,14 +510,14 @@ new Vue({
 
       // 在下載頁面才觸發，代碼注入的頁面不需要校驗
       // 當前協議不一致，切換協議
-      if (location.href.indexOf('m3u8-downloader.glitch.me') > -1 && this.url.indexOf(location.protocol) === -1) {
+      if (location.href.indexOf('m3u8-downloader-cht.glitch.me') > -1 && this.url.indexOf(location.protocol) === -1) {
         alert('當前協議不一致，跳轉至正確頁面重新下載')
-        location.href = `${this.url.split(':')[0]}://m3u8-downloader.glitch.me?source=${this.url}`
+        location.href = `${this.url.split(':')[0]}://m3u8-downloader-cht.glitch.me?source=${this.url}`
         return
       }
 
       // 在下載頁面才觸發，修改頁面 URL，攜帶下載路徑，避免刷新後丟失
-      if (location.href.indexOf('m3u8-downloader.glitch.me') > -1) {
+      if (location.href.indexOf('m3u8-downloader-cht.glitch.me') > -1) {
         window.history.replaceState(null, '', `${location.href.split('?')[0]}?source=${this.url}`)
       }
 
@@ -813,15 +813,15 @@ new Vue({
 
           // 載入中 ASE 解密
           let $ase = document.createElement('script')
-          $ase.src = 'https://m3u8-downloader.glitch.me/aes-decryptor.js'
+          $ase.src = 'https://m3u8-downloader-cht.glitch.me/aes-decryptor.js'
 
           // 載入中 mp4 轉碼
           let $mp4 = document.createElement('script')
-          $mp4.src = 'hhttps://m3u8-downloader.glitch.me/mux-mp4.js'
+          $mp4.src = 'hhttps://m3u8-downloader-cht.glitch.me/mux-mp4.js'
 
           // 載入中 vue
           let $vue = document.createElement('script')
-          $vue.src = 'https://m3u8-downloader.glitch.me/vue.js'
+          $vue.src = 'https://m3u8-downloader-cht.glitch.me/vue.js'
 
           // 監聽 vue 載入中完成，執行業務代碼
           $vue.addEventListener('load', () => {${script}})
