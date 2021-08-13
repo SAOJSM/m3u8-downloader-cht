@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name         m3u8-downloader
-// @namespace    https://github.com/Momo707577045/m3u8-downloader
+// @name         m3u8-downloader-cht
+// @namespace    https://github.com/SAOJSM/m3u8-downloader-cht
 // @version      0.5.0
-// @description  https://github.com/Momo707577045/m3u8-downloader 配套插件
-// @author       Momo707577045
+// @description  https://github.com/SAOJSM/m3u8-downloader-cht 配套插件
+// @author       SAOJSM
 // @include      *
-// @exclude      http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html
+// @exclude      https://m3u8-downloader-cht.glitch.me
 // @grant        none
 // @run-at document-start
 // ==/UserScript==
@@ -37,7 +37,7 @@
     xhr.send(null);
   }
 
-  // 检测 m3u8 链接的有效性
+  // 檢測 m3u8 連結的有效性
   function checkM3u8Url(url) {
     ajax({
       url,
@@ -47,14 +47,14 @@
           m3u8Target = url
           console.log('【m3u8】----------------------------------------')
           console.log(url)
-          console.log('http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html?source=' + url)
+          console.log('https://github.com/SAOJSM/m3u8-downloader-cht/index.html?source=' + url)
         }
       }
     })
   }
 
   function resetAjax() {
-    if (window._hadResetAjax) { // 如果已经重置过，则不再进入。解决开发时局部刷新导致重新加载问题
+    if (window._hadResetAjax) { // 如果已經重置過，則不再進入。解決開發時局部刷新導致重新加載問題
       return
     }
     window._hadResetAjax = true
@@ -84,7 +84,7 @@
     border-radius: 4px;
     border: 1px solid #eeeeee;
     background-color: #3D8AC7;
-  " id="m3u8-jump">跳转下载</div>
+  " id="m3u8-jump">跳轉下載</div>
   <div style="
     margin-top: 6px;
     padding: 6px 10px ;
@@ -94,7 +94,7 @@
     border-radius: 4px;
     border: 1px solid #eeeeee;
     background-color: #3D8AC7;
-  " id="m3u8-append">注入下载</div>
+  " id="m3u8-append">注入下載</div>
   <div style="
     margin-top: 4px;
     height: 34px;
@@ -130,7 +130,7 @@
     })
 
     m3u8Jump.addEventListener('click', function() {
-      window.open('http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html?source=' + m3u8Target)
+      window.open('https://m3u8-downloader-cht.glitch.me/m3u8-downloader/index.html?source=' + m3u8Target)
     })
 
     m3u8Append.addEventListener('click', function() {
@@ -151,7 +151,7 @@
           script = script[1] + script[2];
 
           if (m3u8Target) {
-            script = script.replace(`url: '', // 在线链接`, `url: '${m3u8Target}',`);
+            script = script.replace(`url: '', // 在線連結`, `url: '${m3u8Target}',`);
           }
 
           // 注入html
@@ -166,24 +166,24 @@
           $section.style.backgroundColor = 'white'
           document.body.appendChild($section);
 
-          // 加载 ASE 解密
+          // 加載 ASE 解密
           let $ase = document.createElement('script')
-          $ase.src = 'http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/aes-decryptor.js'
+          $ase.src = 'https://m3u8-downloader-cht.glitch.me/m3u8-downloader/aes-decryptor.js'
 
-          // 加载 mp4 转码
+          // 加載 mp4 轉碼
           let $mp4 = document.createElement('script')
-          $mp4.src = 'http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/mux-mp4.js'
+          $mp4.src = 'https://m3u8-downloader-cht.glitch.me/m3u8-downloader/mux-mp4.js'
 
-          // 加载 vue
+          // 加載 vue
           let $vue = document.createElement('script')
           $vue.src = 'https://cdn.bootcss.com/vue/2.6.10/vue.min.js'
 
-          // 监听 vue 加载完成，执行业务代码
+          // 監聽 vue 加載完成，執行業務代碼
           $vue.addEventListener('load', function() {eval(script)})
           document.body.appendChild($vue);
           document.body.appendChild($mp4);
           document.body.appendChild($ase);
-          alert('注入成功，请滚动到页面底部')
+          alert('注入成功，請滾動到頁面底部')
         },
       })
     })
