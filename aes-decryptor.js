@@ -1,4 +1,4 @@
-// 代码来至 hls.js  https://github.com/video-dev/hls.js
+// 代碼來自 hls.js  https://github.com/video-dev/hls.js
 
 function removePadding(buffer) {
   const outputBytes = buffer.byteLength;
