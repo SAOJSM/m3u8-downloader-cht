@@ -1,7 +1,7 @@
 # m3u8 影片線上下載工具([English version](https://github.com/SAOJSM/m3u8-downloader-cht/blob/master/README-EN.md))
 
 ![界面](https://i.imgur.com/3leDymH.jpg)
-### [工具在線地址](https://m3u8-downloader-cht.glitch.me)，推薦使用 chrome 瀏覽器。
+### [線上工具網址](https://m3u8-downloader-cht.glitch.me)，推薦使用 chrome 瀏覽器。
 
 ### 研發背景
 - m3u8影片格式簡介
