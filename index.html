@@ -830,8 +830,10 @@ new Vue({
           document.body.appendChild($ase);
           alert('注入成功，請滾動到頁面底部，若白屏則等待資源載入中')
           `;
-            this.copyToClipboard(codeStr);
-            this.tips = '複製成功，打開影片網頁控制台，注入本代碼';
+            setTimeout(() => {
+              navigator.clipboard.writeText(codeStr)
+                .then(() => this.tips = '複製成功，打開影片網頁控制台，注入本代碼');
+            }, 0);
           },
           fail: () => {
             this.alertError('連結不正確，請查看連結是否有效');
@@ -839,28 +841,6 @@ new Vue({
         })
       }
     },
-
-    // 拷貝剪切板
-    copyToClipboard(content) {
-      clearTimeout(this.timeouter)
-
-      if (!document.queryCommandSupported('copy')) {
-        return false
-      }
-
-      let $input = document.createElement('textarea')
-      $input.style.opacity = '0'
-      $input.value = content
-      document.body.appendChild($input)
-      $input.select()
-
-      const result = document.execCommand('copy')
-      document.body.removeChild($input)
-      $input = null
-
-      return result
-    },
-
   }
 })
 // script注入
