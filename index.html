@@ -1,849 +1,587 @@
-<!doctype html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="keywords" content="m3u8 downloader tradional chinese for web">
-  <meta name="description" content="m3u8 downloader tradional chinese for web, SAOJSM">
-  <title>m3u8 downloader tradional chinese</title>
-  <style>
-  /*全局設置*/
-  html, body {
-    margin: 0;
-    padding: 0;
-  }
-  body::-webkit-scrollbar { display: none}
-  p {
-    margin: 0;
-  }
-  [v-cloak] {
-    display: none;
-  }
-  #m-app {
-    height: 100%;
-    width: 100%;
-    text-align: center;
-    padding: 10px 50px 80px;
-    box-sizing: border-box;
-  }
-  .m-p-action {
-    margin: 20px auto;
-    max-width: 1100px;
-    width: 100%;
-    font-size: 35px;
-    text-align: center;
-    font-weight: bold;
-  }
-  .m-p-other, .m-p-tamper, .m-p-github, .m-p-language {
-    position: fixed;
-    right: 50px;
-    background-color: #eff3f6;
-    background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
-    color: #24292e;
-    border: 1px solid rgba(27, 31, 35, .2);
-    border-radius: 3px;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
-    padding: 6px 12px;
-    z-index: 99;
-  }
-  .m-p-help {
-    position: fixed;
-    right: 50px;
-    top: 50px;
-    width: 30px;
-    height: 30px;
-    color: #666666;
-    z-index: 2;
-    line-height: 30px;
-    font-weight: bolder;
-    border-radius: 50%;
-    border: 1px solid rgba(27, 31, 35, .2);
-    cursor: pointer;
-    background-color: #eff3f6;
-    background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
-  }
-  .m-p-github:hover, .m-p-other:hover, .m-p-tamper:hover, .m-p-help:hover, .m-p-language:hover {
-    opacity: 0.9;
-  }
-  .m-p-language {
-    bottom: 30px;
-  }
-  .m-p-other {
-    bottom: 70px;
-  }
-  .m-p-tamper {
-    bottom: 110px;
-  }
-  .m-p-github {
-    bottom: 150px;
-  }
-  /*廣告*/
-  .m-p-refer {
-    position: absolute;
-    left: 50px;
-    bottom: 50px;
-  }
-  .m-p-refer .text {
-    position: absolute;
-    top: -80px;
-    left: -40px;
-    animation-name: upAnimation;
-    transform-origin: center bottom;
-    animation-duration: 2s;
-    animation-fill-mode: both;
-    animation-iteration-count: infinite;
-    animation-delay: .5s;
-  }
-  .m-p-refer .close {
-    display: block;
-    position: absolute;
-    top: -110px;
-    right: -50px;
-    padding: 0;
-    margin: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    z-index: 3;
-    transition: 0.3s all;
-    background-size: 30px 30px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  .m-p-refer .close:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-  .m-p-refer .link {
-    border-radius: 4px;
-    text-decoration: none;
-    background-color: #4E84E6;
-    transition: 0.3s all;
-  }
-  .m-p-refer .link:hover {
-    top: -10px;
-    color: #333333;
-    border: 1px solid transparent;
-    background: rgba(0, 0, 0, 0.6);
-    box-shadow: 2px 11px 20px 0 rgba(0, 0, 0, 0.6);
-  }
-  @keyframes upAnimation {
-    0% {
-      transform: rotate(0deg);
-      transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
-    }
-
-    10% {
-      transform: rotate(-12deg);
-      transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
-    }
-
-    20% {
-      transform: rotate(12deg);
-      transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
-    }
-
-    28% {
-      transform: rotate(-10deg);
-      transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
-    }
-
-    36% {
-      transform: rotate(10deg);
-      transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
-    }
-
-    42% {
-      transform: rotate(-8deg);
-      transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
-    }
-
-    48% {
-      transform: rotate(8deg);
-      transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
-    }
-
-    52% {
-      transform: rotate(-4deg);
-      transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
-    }
-
-    56% {
-      transform: rotate(4deg);
-      transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
-    }
-
-    60% {
-      transform: rotate(0deg);
-      transition-timing-function: cubic-bezier(0.755, .5, .855, .06)
-    }
-
-    100% {
-      transform: rotate(0deg);
-      transition-timing-function: cubic-bezier(0.215, .61, .355, 1)
-    }
-  }
-  /*頂部信息錄入*/
-  .m-p-temp-url {
-    padding-top: 50px;
-    padding-bottom: 10px;
-    width: 100%;
-    color: #999999;
-    text-align: left;
-    font-style: italic;
-    word-break: break-all;
-  }
-  .m-p-input-container {
-    display: flex;
-  }
-  .m-p-input-container input {
-    flex: 1;
-    margin-bottom: 30px;
-    display: block;
-    width: 280px;
-    padding: 16px;
-    font-size: 24px;
-    border-radius: 4px;
-    box-shadow: none;
-    color: #444444;
-    border: 1px solid #cccccc;
-  }
-  .m-p-input-container .range-input {
-    margin-left: 10px;
-    flex: 0 0 100px;
-    width: 100px;
-    box-sizing: border-box;
-  }
-  .m-p-input-container div {
-    position: relative;
-    display: inline-block;
-    margin-left: 10px;
-    height: 60px;
-    line-height: 60px;
-    font-size: 24px;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid #eeeeee;
-    background-color: #3D8AC7;
-    opacity: 1;
-    transition: 0.3s all;
-  }
-  .m-p-input-container div:hover {
-    opacity: 0.9;
-  }
-  .m-p-input-container div {
-    width: 200px;
-  }
-  .m-p-input-container .disable {
-    cursor: not-allowed;
-    background-color: #dddddd;
-  }
-  /*下載狀態*/
-  .m-p-line {
-    margin: 20px 0 50px;
-    vertical-align: top;
-    width: 100%;
-    height: 5px;
-    border-bottom: dotted;
-  }
-  .m-p-tips {
-    width: 100%;
-    color: #999999;
-    text-align: left;
-    font-style: italic;
-    word-break: break-all;
-  }
-  .m-p-tips p {
-    width: 100px;
-    display: inline-block;
-  }
-  .m-p-segment {
-    text-align: left;
-  }
-  .m-p-segment .item {
-    display: inline-block;
-    margin: 10px 6px;
-    width: 50px;
-    height: 40px;
-    color: white;
-    line-height: 40px;
-    text-align: center;
-    border-radius: 4px;
-    cursor: help;
-    border: solid 1px #eeeeee;
-    background-color: #dddddd;
-  }
-  .m-p-segment .finish {
-    background-color: #0ACD76;
-  }
-  .m-p-segment .error {
-    cursor: pointer;
-    background-color: #DC5350;
-  }
-  .m-p-cross, .m-p-final {
-    display: inline-block;
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    font-size: 20px;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid #eeeeee;
-    background-color: #3D8AC7;
-    opacity: 1;
-    transition: 0.3s all;
-  }
-  .m-p-final {
-    margin-top: 10px;
-    text-decoration: none;
-  }
-  .m-p-force, .m-p-retry {
-    position: absolute;
-    right: 50px;
-    display: inline-block;
-    padding: 6px 12px;
-    font-size: 18px;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-    border: 1px solid #eeeeee;
-    background-color: #3D8AC7;
-    opacity: 1;
-    transition: 0.3s all;
-  }
-  .m-p-retry {
-    right: 250px;
-  }
-  .m-p-force:hover, .m-p-retry:hover {
-    opacity: 0.9;
-  }
-
-  </style>
-</head>
-
-<body>
-<div id="loading">頁面載入中，請耐心等待...</div>
-<section id="m-app" v-cloak>
-  <!--頂部操作提示-->
-  <section class="m-p-action g-box">{{tips}}</section>
-  <a class="m-p-github" target="_blank" href="https://github.com/SAOJSM/m3u8-downloader-cht">github</a>
-
-  <!--文件載入-->
-  <div class="m-p-temp-url">測試連結：https://vod-normal-global-cdn-z01.afreecatv.com/v3/mapped-vod/save01/afreeca/station/2021/0811/16/1628668696129310.php/live/0/index-f3-v1-a1.m3u8</div>
-  <section class="m-p-input-container">
-    <input type="text" v-model="url" :disabled="downloading" placeholder="請輸入 m3u8 連結">
-
-    <!--範圍查詢-->
-    <template v-if="!downloading || rangeDownload.isShowRange">
-      <div v-if="!rangeDownload.isShowRange" @click="getM3U8(true)">特定範圍下載</div>
-      <template v-else>
-        <input class="range-input" type="number" v-model="rangeDownload.startSegment" :disabled="downloading" placeholder="起始片段">
-        <input class="range-input" type="number" v-model="rangeDownload.endSegment" :disabled="downloading" placeholder="截止片段">
-      </template>
-    </template>
-
-    <!--還未開始下載-->
-    <template v-if="!downloading">
-      <div @click="getM3U8(false)">原格式下載</div>
-      <div @click="getMP4">轉碼為MP4下載</div>
-    </template>
-    <div v-else-if="finishNum === rangeDownload.targetSegment && rangeDownload.targetSegment > 0" class="disable">下載完成</div>
-    <div v-else @click="togglePause">{{ isPause ? '恢復下載' : '暫停下載' }}</div>
-  </section>
-
-  <div class="m-p-cross" @click="copyCode">當無法下載，資源發生跨域限制時，在影片源頁面打開Console頁，貼上代碼解決，點擊本按鈕複製代碼</div>
-  <a class="m-p-final" target="_blank" href="https://segmentfault.com/a/1190000025182822">下載的影片看不了？試試這個終結解決方案「無差別影片提取工具」，有配套「油猴」插件啦！！！</a>
-
-  <template v-if="finishList.length > 0">
-    <div class="m-p-line"></div>
-    <div class="m-p-retry" v-if="errorNum && downloadIndex >= rangeDownload.targetSegment" @click="retryAll">重新下載錯誤片段</div>
-    <div class="m-p-force" v-if="mediaFileList.length" @click="forceDownload">強制下載現有片段</div>
-    <div class="m-p-tips">待下載片段總量：{{ rangeDownload.targetSegment }}，已下載：{{ finishNum }}，錯誤：{{ errorNum }}，進度：{{ (finishNum / rangeDownload.targetSegment * 100).toFixed(2) }}%</div>
-    <div class="m-p-tips">若某影片片段下載發生錯誤，將標記為紅色，可點擊相應圖標進行重試</div>
-    <section class="m-p-segment">
-      <div class="item" v-for="(item, index) in finishList" :class="[item.status]" :title="item.title" @click="retry(index)">{{ index + 1 }}</div>
-    </section>
-  </template>
-</section>
-  
-</body>
-<!--vue 前端框架-->
-<script src="https://m3u8-downloader-cht.glitch.me/vue.js"></script>
-<script src="https://m3u8-downloader-cht.glitch.me/aes-decryptor.js"></script>
-<script src="https://m3u8-downloader-cht.glitch.me/mux-mp4.js"></script>
-
-<script>
-// script注入
-new Vue({
-  el: '#m-app',
-
-  data() {
-    return {
-      url: '', // 在線連結
-      tips: 'm3u8 影片線上下載工具', // 頂部提示
-      isPause: false, // 是否暫停下載
-      isGetMP4: false, // 是否轉碼為 MP4 下載
-      durationSecond: 0, // 影片持續時長
-      isShowRefer: true, // 是否顯示推送
-      downloading: false, // 是否下載中
-      beginTime: '', // 開始下載的時間
-      errorNum: 0, // 錯誤數
-      finishNum: 0, // 已下載數
-      downloadIndex: 0, // 當前下載片段
-      finishList: [], // 下載完成項目
-      tsUrlList: [], // ts URL數組
-      mediaFileList: [], // 下載的媒體數組
-      rangeDownload: { // 特定範圍下載
-        isShowRange: false, // 是否顯示範圍下載
-        startSegment: '', // 起始片段
-        endSegment: '', // 截止片段
-        targetSegment: 1, // 待下載片段
-      },
-      aesConf: { // AES 影片解密配置
-        method: '', // 加密算法
-        uri: '', // key 所在文件路徑
-        iv: '', // 偏移值
-        key: '', // 秘鑰
-        decryptor: null, // 解碼器對象
-
-        stringToBuffer: function(str) {
-          return new TextEncoder().encode(str)
-        },
-      },
-    }
-  },
-
-  created() {
-    this.getSource();
-    document.getElementById('loading') && document.getElementById('loading').remove()
-    window.addEventListener('keyup', this.onKeyup)
-  },
-
-  beforeDestroy() {
-    window.removeEventListener('keyup', this.onKeyup)
-  },
-
-  methods: {
-    // 獲取連結中攜帶的資源連結
-    getSource() {
-      let { href } = location
-      if (href.indexOf('?source=') > -1) {
-        this.url = href.split('?source=')[1]
-      }
-    },
-
-    // 退出彈窗
-    onKeyup(event) {
-      if (event.keyCode === 13) { // 鍵入ESC
-        this.getM3U8()
-      }
-    },
-
-    // ajax 請求
-    ajax(options) {
-      options = options || {};
-      let xhr = new XMLHttpRequest();
-      if (options.type === 'file') {
-        xhr.responseType = 'arraybuffer';
-      }
-
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4) {
-          let status = xhr.status;
-          if (status >= 200 && status < 300) {
-            options.success && options.success(xhr.response);
-          } else {
-            options.fail && options.fail(status);
-          }
-        }
-      };
-
-      xhr.open("GET", options.url, true);
-      xhr.send(null);
-    },
-
-    // 合成URL
-    applyURL(targetURL, baseURL) {
-      baseURL = baseURL || location.href
-      if (targetURL.indexOf('http') === 0) {
-        return targetURL
-      } else if (targetURL[0] === '/') {
-        let domain = baseURL.split('/')
-        return domain[0] + '//' + domain[2] + targetURL
-      } else {
-        let domain = baseURL.split('/')
-        domain.pop()
-        return domain.join('/') + '/' + targetURL
-      }
-    },
-
-    // 解析為 mp4 下載
-    getMP4() {
-      this.isGetMP4 = true
-      this.getM3U8()
-    },
-
-    // 獲取在線文件
-    getM3U8(onlyGetRange) {
-      if (!this.url) {
-        alert('請輸入連結')
-        return
-      }
-      if (this.url.toLowerCase().indexOf('.m3u8') === -1) {
-        alert('連結有誤，請重新輸入')
-        return
-      }
-      if (this.downloading) {
-        alert('資源下載中，請稍候')
-        return
-      }
-
-      // 在下載頁面才觸發，代碼注入的頁面不需要校驗
-      // 當前協議不一致，切換協議
-      if (location.href.indexOf('m3u8-downloader-cht.glitch.me') > -1 && this.url.indexOf(location.protocol) === -1) {
-        alert('當前協議不一致，跳轉至正確頁面重新下載')
-        location.href = `${this.url.split(':')[0]}://m3u8-downloader-cht.glitch.me?source=${this.url}`
-        return
-      }
-
-      // 在下載頁面才觸發，修改頁面 URL，攜帶下載路徑，避免刷新後丟失
-      if (location.href.indexOf('m3u8-downloader-cht.glitch.me') > -1) {
-        window.history.replaceState(null, '', `${location.href.split('?')[0]}?source=${this.url}`)
-      }
-
-      this.tips = 'm3u8 文件下載中，請稍候'
-      this.beginTime = new Date()
-      this.ajax({
-        url: this.url,
-        success: (m3u8Str) => {
-          this.tsUrlList = []
-          this.finishList = []
-
-          // 提取 ts 影片片段地址
-          m3u8Str.split('\n').forEach((item) => {
-            if (item.toLowerCase().indexOf('.ts') > -1) {
-              this.tsUrlList.push(this.applyURL(item, this.url))
-              this.finishList.push({
-                title: item,
-                status: ''
-              })
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U8 下載工具</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-virtual-scroller@1.1.0/dist/vue-virtual-scroller.css">
+    <script>
+        // 自動注入跨域代碼
+        fetch = new Proxy(fetch, {
+            apply(target, that, args) {
+                const [url, options = {}] = args;
+                options.credentials = 'include';
+                options.mode = 'cors';
+                return target.apply(that, [url, options]);
             }
-          })
-
-          // 僅獲取影片片段數
-          if (onlyGetRange) {
-            this.rangeDownload.isShowRange = true
-            this.rangeDownload.endSegment = this.tsUrlList.length
-            this.rangeDownload.targetSegment = this.tsUrlList.length
-            return
-          } else {
-            let startSegment = Math.max(this.rangeDownload.startSegment || 1, 1) // 最小為 1
-            let endSegment = Math.max(this.rangeDownload.endSegment || this.tsUrlList.length, 1)
-            startSegment = Math.min(startSegment, this.tsUrlList.length) // 最大為 this.tsUrlList.length
-            endSegment = Math.min(endSegment, this.tsUrlList.length)
-            this.rangeDownload.startSegment = Math.min(startSegment, endSegment)
-            this.rangeDownload.endSegment = Math.max(startSegment, endSegment)
-            this.rangeDownload.targetSegment = this.rangeDownload.endSegment - this.rangeDownload.startSegment + 1
-            this.downloadIndex = this.rangeDownload.startSegment - 1
-            this.downloading = true
-          }
-
-          // 獲取需要下載的 MP4 影片長度
-          if (this.isGetMP4) {
-            let infoIndex = 0
-            m3u8Str.split('\n').forEach(item => {
-              if (item.toUpperCase().indexOf('#EXTINF:') > -1) { // 計算影片總時長，設置 mp4 信息時使用
-                infoIndex++
-                if (this.rangeDownload.startSegment <= infoIndex && infoIndex <= this.rangeDownload.endSegment) {
-                  this.durationSecond += parseFloat(item.split('#EXTINF:')[1])
-                }
-              }
-            })
-          }
-
-          // 檢測影片 AES 加密
-          if (m3u8Str.indexOf('#EXT-X-KEY') > -1) {
-            this.aesConf.method = (m3u8Str.match(/(.*METHOD=([^,\s]+))/) || ['', '', ''])[2]
-            this.aesConf.uri = (m3u8Str.match(/(.*URI="([^"]+))"/) || ['', '', ''])[2]
-            this.aesConf.iv = (m3u8Str.match(/(.*IV=([^,\s]+))/) || ['', '', ''])[2]
-            this.aesConf.iv = this.aesConf.iv ? this.aesConf.stringToBuffer(this.aesConf.iv) : ''
-            this.aesConf.uri = this.applyURL(this.aesConf.uri, this.url)
-
-            // let params = m3u8Str.match(/#EXT-X-KEY:([^,]*,?METHOD=([^,]+))?([^,]*,?URI="([^,]+)")?([^,]*,?IV=([^,^\n]+))?/)
-            // this.aesConf.method = params[2]
-            // this.aesConf.uri = this.applyURL(params[4], this.url)
-            // this.aesConf.iv = params[6] ? this.aesConf.stringToBuffer(params[6]) : ''
-            this.getAES();
-          } else if (this.tsUrlList.length > 0) { // 如果影片沒加密，則直接下載片段，否則先下載秘鑰
-            this.downloadTS()
-          } else {
-            this.alertError('資源為空，請查看連結是否有效')
-          }
-        },
-        fail: () => {
-          this.alertError('連結不正確，請查看連結是否有效')
-        }
-      })
-    },
-
-    // 獲取AES配置
-    getAES() {
-      alert('影片被 AES 加密，點擊確認，進行影片解碼')
-      this.ajax({
-        type: 'file',
-        url: this.aesConf.uri,
-        success: (key) => {
-          // console.log('getAES', key)
-          // this.aesConf.key = this.aesConf.stringToBuffer(key)
-          this.aesConf.key = key
-          this.aesConf.decryptor = new AESDecryptor()
-          this.aesConf.decryptor.constructor()
-          this.aesConf.decryptor.expandKey(this.aesConf.key);
-          this.downloadTS()
-        },
-        fail: () => {
-          this.alertError('AES 配置不正確')
-        }
-      })
-    },
-
-    // ts 片段的 AES 解碼
-    aesDecrypt(data, index) {
-      let iv = this.aesConf.iv || new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, index])
-      return this.aesConf.decryptor.decrypt(data, 0, iv.buffer || iv, true)
-    },
-
-    // 下載分片
-    downloadTS() {
-      this.tips = 'ts 影片片段下載中，請稍候'
-      let download = () => {
-        let isPause = this.isPause // 使用另一個變量來保持下載前的暫停狀態，避免回調後沒修改
-        let index = this.downloadIndex
-        this.downloadIndex++
-        if (this.finishList[index] && this.finishList[index].status === '') {
-          this.ajax({
-            url: this.tsUrlList[index],
-            type: 'file',
-            success: (file) => {
-              this.dealTS(file, index, () => this.downloadIndex < this.rangeDownload.endSegment && !isPause && download())
-            },
-            fail: () => {
-              this.errorNum++
-              this.finishList[index].status = 'error'
-              if (this.downloadIndex < this.rangeDownload.endSegment) {
-                !isPause && download()
-              }
-            }
-          })
-        } else if (this.downloadIndex < this.rangeDownload.endSegment) { // 跳過已經成功的片段
-          !isPause && download()
-        }
-      }
-
-      // 建立多少個 ajax 線程
-      for (let i = 0; i < Math.min(10, this.rangeDownload.targetSegment - this.finishNum); i++) {
-        download(i)
-      }
-    },
-
-    // 處理 ts 片段，AES 解密、mp4 轉碼
-    dealTS(file, index, callback) {
-      const data = this.aesConf.uri ? this.aesDecrypt(file, index) : file
-      this.conversionMp4(data, index, (afterData) => { // mp4 轉碼
-        this.mediaFileList[index - this.rangeDownload.startSegment + 1] = afterData // 判斷文件是否需要解密
-        this.finishList[index].status = 'finish'
-        this.finishNum++
-        if (this.finishNum === this.rangeDownload.targetSegment) {
-          this.downloadFile(this.mediaFileList, this.formatTime(this.beginTime, 'YYYY_MM_DD hh_mm_ss'))
-        }
-        callback && callback()
-      })
-    },
-
-    // 轉碼為 mp4
-    conversionMp4(data, index, callback) {
-      if (this.isGetMP4) {
-        let transmuxer = new muxjs.Transmuxer({
-          keepOriginalTimestamps: true,
-          duration: parseInt(this.durationSecond),
         });
-        transmuxer.on('data', segment => {
-          if (index === this.rangeDownload.startSegment - 1) {
-            let data = new Uint8Array(segment.initSegment.byteLength + segment.data.byteLength);
-            data.set(segment.initSegment, 0);
-            data.set(segment.data, segment.initSegment.byteLength);
-            callback(data.buffer)
-          } else {
-            callback(segment.data)
-          }
-        })
-        transmuxer.push(new Uint8Array(data));
-        transmuxer.flush();
-      } else {
-        callback(data)
-      }
-    },
 
-    // 暫停與恢復
-    togglePause() {
-      this.isPause = !this.isPause
-      !this.isPause && this.retryAll()
-    },
-
-    // 重新下載某個片段
-    retry(index) {
-      if (this.finishList[index].status === 'error') {
-        this.finishList[index].status = ''
-        this.ajax({
-          url: this.tsUrlList[index],
-          type: 'file',
-          success: (file) => {
-            this.errorNum--
-            this.dealTS(file, index)
-          },
-          fail: () => {
-            this.finishList[index].status = 'error'
-          }
-        })
-      }
-    },
-
-    // 重新下載所有錯誤片段
-    retryAll() {
-      this.finishList.forEach((item) => { // 重置所有片段狀態
-        if (item.status === 'error') {
-          item.status = ''
-        }
-      })
-      this.errorNum = 0
-      this.downloadIndex = this.rangeDownload.startSegment - 1
-      this.downloadTS()
-    },
-
-    // 下載整合後的TS文件
-    downloadFile(fileDataList, fileName) {
-      this.tips = 'ts 片段整合中，請留意瀏覽器下載'
-      let fileBlob = null
-      let a = document.createElement('a')
-      if (this.isGetMP4) {
-        fileBlob = new Blob(fileDataList, { type: 'video/mp4' }) // 創建一個Blob對象，並設置文件的 MIME 類型
-        a.download = fileName + '.mp4'
-      } else {
-        fileBlob = new Blob(fileDataList, { type: 'video/MP2T' }) // 創建一個Blob對象，並設置文件的 MIME 類型
-        a.download = fileName + '.ts'
-      }
-      a.href = URL.createObjectURL(fileBlob)
-      a.style.display = 'none'
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-    },
-
-    // 格式化時間
-    formatTime(date, formatStr) {
-      const formatType = {
-        Y: date.getFullYear(),
-        M: date.getMonth() + 1,
-        D: date.getDate(),
-        h: date.getHours(),
-        m: date.getMinutes(),
-        s: date.getSeconds(),
-      }
-      return formatStr.replace(
-        /Y+|M+|D+|h+|m+|s+/g,
-        target => (new Array(target.length).join('0') + formatType[target[0]]).substr(-target.length)
-      )
-    },
-
-    // 強制下載現有片段
-    forceDownload() {
-      if (this.mediaFileList.length) {
-        this.downloadFile(this.mediaFileList, this.formatTime(this.beginTime, 'YYYY_MM_DD hh_mm_ss'))
-      } else {
-        alert('當前無已下載片段')
-      }
-    },
-
-    // 發生錯誤，進行提示
-    alertError(tips) {
-      alert(tips)
-      this.downloading = false
-      this.tips = 'm3u8 影片線上下載工具';
-    },
-
-    // 拷貝本頁面本身，解決跨域問題
-    copyCode() {
-      if (this.tips !== '代碼下載中，請稍候') {
-        this.tips = '代碼下載中，請稍候';
-        this.ajax({
-          url: './index.html',
-          success: (fileStr) => {
-            let fileList = fileStr.split(`<!--vue 前端框架--\>`);
-            let dom = fileList[0];
-            let script = fileList[1] + fileList[2];
-            script = script.split('// script注入');
-            script = script[1] + script[2];
-
-            if (this.url) {
-              script = script.replace(`url: '', // 在線連結`, `url: '${this.url}',`);
+        // 注入 XMLHttpRequest 跨域支持
+        XMLHttpRequest.prototype.setRequestHeader = new Proxy(XMLHttpRequest.prototype.setRequestHeader, {
+            apply(target, that, args) {
+                const [header, value] = args;
+                if (header === 'Origin') return;
+                return target.apply(that, args);
             }
+        });
 
-            let codeStr = `
-          // 注入html
-          let $section = document.createElement('section')
-          $section.innerHTML = \`${dom}\`
-          $section.style.width = '100%'
-          $section.style.height = '800px'
-          $section.style.top = '0'
-          $section.style.left = '0'
-          $section.style.position = 'relative'
-          $section.style.zIndex = '9999'
-          $section.style.backgroundColor = 'white'
-          document.body.appendChild($section);
+        // 修改 open 方法
+        XMLHttpRequest.prototype.open = new Proxy(XMLHttpRequest.prototype.open, {
+            apply(target, that, args) {
+                const [method, url, async = true, user, password] = args;
+                that.withCredentials = true;
+                return target.apply(that, [method, url, async, user, password]);
+            }
+        });
+    </script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .range-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .range-input input {
+            width: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #3D8AC7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .progress-container {
+            margin-top: 20px;
+        }
+        .progress-info {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .segments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        .segment {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #eee;
+            border-radius: 4px;
+            color: #666;
+        }
+        .segment.finished {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .segment.error {
+            background-color: #f44336;
+            color: white;
+            cursor: pointer;
+        }
+        .virtual-scroller {
+            height: 300px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .download-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #f5f5f5;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        .progress-bar-inner {
+            height: 100%;
+            background-color: #3D8AC7;
+            transition: width 0.3s ease;
+            color: white;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-cloak>
+        <div class="container">
+            <div class="header">
+                <h1>{{ tips }}</h1>
+            </div>
 
-          // 載入中 ASE 解密
-          let $ase = document.createElement('script')
-          $ase.src = 'https://m3u8-downloader-cht.glitch.me/aes-decryptor.js'
+            <div class="input-group">
+                <input type="text" v-model="url" :disabled="downloading" placeholder="請輸入 M3U8 網址">
+                <button class="btn" @click="getM3U8" :disabled="downloading || !url">下載原格式</button>
+                <button class="btn" @click="getMP4" :disabled="downloading || !url">下載 MP4</button>
+                <button class="btn" v-if="downloading" @click="togglePause">
+                    {{ isPause ? '繼續' : '暫停' }}
+                </button>
+            </div>
 
-          // 載入中 mp4 轉碼
-          let $mp4 = document.createElement('script')
-          $mp4.src = 'hhttps://m3u8-downloader-cht.glitch.me/mux-mp4.js'
+            <div class="range-input" v-if="!downloading">
+                <span>下載範圍：</span>
+                <input type="number" v-model.number="startSegment" placeholder="起始片段" min="1">
+                <span>至</span>
+                <input type="number" v-model.number="endSegment" placeholder="結束片段" min="1">
+                <span>（可選）</span>
+            </div>
 
-          // 載入中 vue
-          let $vue = document.createElement('script')
-          $vue.src = 'https://m3u8-downloader-cht.glitch.me/vue.js'
+            <div class="progress-container" v-if="finishList.length > 0">
+                <div class="progress-info">
+                    <div>總片段：{{ tsUrlList.length }}</div>
+                    <div>已完成：{{ finishNum }}</div>
+                    <div>錯誤：{{ errorNum }}</div>
+                    <div>進度：{{ (finishNum / tsUrlList.length * 100).toFixed(2) }}%</div>
+                </div>
 
-          // 監聽 vue 載入中完成，執行業務代碼
-          $vue.addEventListener('load', () => {${script}})
-          document.body.appendChild($vue);
-          document.body.appendChild($mp4);
-          document.body.appendChild($ase);
-          alert('注入成功，請滾動到頁面底部，若白屏則等待資源載入中')
-          `;
-            setTimeout(() => {
-              navigator.clipboard.writeText(codeStr)
-                .then(() => this.tips = '複製成功，打開影片網頁控制台，注入本代碼');
-            }, 0);
-          },
-          fail: () => {
-            this.alertError('連結不正確，請查看連結是否有效');
-          },
-        })
-      }
-    },
-  }
-})
-// script注入
-</script>
+                <div class="segments">
+                    <div v-for="(item, index) in finishList" 
+                         :key="index"
+                         class="segment"
+                         :class="{ 
+                             finished: item.status === 'finish',
+                             error: item.status === 'error'
+                         }"
+                         @click="retry(index)">
+                        {{ index + 1 }}
+                    </div>
+                </div>
 
+                <div class="virtual-scroller" v-if="downloadList.length > 0">
+                    <RecycleScroller
+                        class="scroller"
+                        :items="downloadList"
+                        :item-size="50"
+                        key-field="id">
+                        <template v-slot="{ item }">
+                            <div class="download-item">
+                                <div>{{ item.title }}</div>
+                                <div class="progress-bar">
+                                    <div class="progress-bar-inner"
+                                         :style="{ width: item.progress + '%' }">
+                                        {{ item.progress }}%
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </RecycleScroller>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-virtual-scroller@1.1.0/dist/vue-virtual-scroller.min.js"></script>
+    <script src="./aes-decryptor.js"></script>
+    <script src="./mux-mp4.js"></script>
+
+    <script>
+        Vue.use(window.VueVirtualScroller);
+
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    url: '',
+                    tips: 'M3U8 下載工具',
+                    isPause: false,
+                    isGetMP4: false,
+                    durationSecond: 0,
+                    downloading: false,
+                    beginTime: '',
+                    errorNum: 0,
+                    finishNum: 0,
+                    downloadIndex: 0,
+                    finishList: [],
+                    tsUrlList: [],
+                    mediaFileList: [],
+                    downloadList: [],
+                    startSegment: null,
+                    endSegment: null,
+                    aesConf: {
+                        method: '',
+                        uri: '',
+                        iv: '',
+                        key: '',
+                        decryptor: null,
+                        stringToBuffer: function(str) {
+                            return new TextEncoder().encode(str)
+                        },
+                    },
+                    chunkSize: 1024 * 1024 * 2,
+                    maxConcurrentDownloads: 3,
+                    downloadQueue: [],
+                    activeDownloads: 0,
+                    mediaCache: new Map(),
+                    cleanupInterval: null
+                }
+            },
+            created() {
+                this.getSource();
+                window.addEventListener('keyup', this.onKeyup);
+                this.cleanupInterval = setInterval(this.cleanupResources, 30000);
+            },
+            beforeDestroy() {
+                window.removeEventListener('keyup', this.onKeyup);
+                clearInterval(this.cleanupInterval);
+                this.cleanupResources();
+            },
+            methods: {
+                getSource() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const source = urlParams.get('source');
+                    if (source) {
+                        this.url = source;
+                    }
+                },
+
+                onKeyup(event) {
+                    if (event.key === 'Enter') {
+                        this.getM3U8();
+                    }
+                },
+
+                getMP4() {
+                    this.isGetMP4 = true;
+                    this.getM3U8();
+                },
+
+                getM3U8() {
+                    if (!this.url) {
+                        alert('請輸入 M3U8 網址');
+                        return;
+                    }
+                    if (this.url.toLowerCase().indexOf('.m3u8') === -1) {
+                        alert('網址格式錯誤，請確認是否為 M3U8 網址');
+                        return;
+                    }
+                    if (this.downloading) {
+                        alert('下載中，請等待目前的下載完成');
+                        return;
+                    }
+
+                    this.resetState();
+                    this.downloading = true;
+                    this.tips = 'M3U8 檔案下載中...';
+                    this.beginTime = new Date();
+
+                    fetch(this.url)
+                        .then(response => response.text())
+                        .then(this.processM3U8)
+                        .catch(error => {
+                            console.error('下載失敗:', error);
+                            this.alertError('下載失敗，請確認網址是否正確');
+                        });
+                },
+
+                processM3U8(m3u8Content) {
+                    const lines = m3u8Content.split('\n');
+                    for (const line of lines) {
+                        if (line.toLowerCase().indexOf('.ts') > -1) {
+                            const tsUrl = this.applyURL(line, this.url);
+                            this.tsUrlList.push(tsUrl);
+                            this.finishList.push({
+                                title: line,
+                                status: ''
+                            });
+                        } else if (this.isGetMP4 && line.toUpperCase().indexOf('#EXTINF:') > -1) {
+                            this.durationSecond += parseFloat(line.split('#EXTINF:')[1]);
+                        }
+                    }
+
+                    // 處理下載範圍
+                    if (this.startSegment && this.endSegment) {
+                        const start = Math.max(0, this.startSegment - 1);
+                        const end = Math.min(this.tsUrlList.length, this.endSegment);
+                        this.tsUrlList = this.tsUrlList.slice(start, end);
+                        this.finishList = this.finishList.slice(start, end);
+                    }
+
+                    if (m3u8Content.indexOf('#EXT-X-KEY') > -1) {
+                        this.processAESConfig(m3u8Content);
+                    } else if (this.tsUrlList.length > 0) {
+                        this.startDownload();
+                    } else {
+                        this.alertError('沒有找到可下載的影片片段');
+                    }
+                },
+
+                processAESConfig(m3u8Content) {
+                    this.aesConf.method = (m3u8Content.match(/(.*METHOD=([^,\s]+))/) || ['', '', ''])[2];
+                    this.aesConf.uri = (m3u8Content.match(/(.*URI="([^"]+))"/) || ['', '', ''])[2];
+                    this.aesConf.iv = (m3u8Content.match(/(.*IV=([^,\s]+))/) || ['', '', ''])[2];
+                    this.aesConf.iv = this.aesConf.iv ? this.aesConf.stringToBuffer(this.aesConf.iv) : '';
+                    this.aesConf.uri = this.applyURL(this.aesConf.uri, this.url);
+
+                    fetch(this.aesConf.uri)
+                        .then(response => response.arrayBuffer())
+                        .then(key => {
+                            this.aesConf.key = key;
+                            this.aesConf.decryptor = new AESDecryptor();
+                            this.aesConf.decryptor.constructor();
+                            this.aesConf.decryptor.expandKey(this.aesConf.key);
+                            this.startDownload();
+                        })
+                        .catch(error => {
+                            console.error('AES 金鑰下載失敗:', error);
+                            this.alertError('AES 金鑰下載失敗');
+                        });
+                },
+
+                startDownload() {
+                    this.downloadQueue = [...Array(this.tsUrlList.length).keys()];
+                    this.processDownloadQueue();
+                },
+
+                async processDownloadQueue() {
+                    const processChunk = async () => {
+                        if (this.downloadQueue.length === 0 || this.isPause) return;
+                        
+                        while (this.downloadQueue.length > 0 && 
+                               this.activeDownloads < this.maxConcurrentDownloads && 
+                               !this.isPause) {
+                            const index = this.downloadQueue.shift();
+                            this.activeDownloads++;
+                            
+                            try {
+                                await this.downloadTsChunk(index);
+                            } catch (error) {
+                                console.error('下載錯誤:', error);
+                                this.errorNum++;
+                                this.finishList[index].status = 'error';
+                            } finally {
+                                this.activeDownloads--;
+                            }
+                        }
+                        
+                        if (this.downloadQueue.length > 0 && !this.isPause) {
+                            setTimeout(processChunk, 100);
+                        }
+                    };
+                    
+                    await processChunk();
+                },
+
+                async downloadTsChunk(index) {
+                    if (!this.finishList[index] || this.finishList[index].status !== '') {
+                        return;
+                    }
+
+                    const response = await fetch(this.tsUrlList[index]);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const arrayBuffer = await response.arrayBuffer();
+                    await this.processTsChunk(arrayBuffer, index);
+                },
+
+                async processTsChunk(arrayBuffer, index) {
+                    try {
+                        const data = this.aesConf.uri ? 
+                            this.aesConf.decryptor.decrypt(
+                                arrayBuffer, 
+                                0, 
+                                this.aesConf.iv || new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, index]), 
+                                true
+                            ) : arrayBuffer;
+
+                        let processedData;
+                        if (this.isGetMP4) {
+                            processedData = await this.convertToMP4(data, index);
+                        } else {
+                            processedData = data;
+                        }
+
+                        this.mediaCache.set(index, {
+                            data: processedData,
+                            status: 'finish'
+                        });
+
+                        this.finishList[index].status = 'finish';
+                        this.finishNum++;
+
+                        this.updateProgress(index, 100);
+
+                        if (this.finishNum === this.tsUrlList.length) {
+                            await this.mergeAndDownload();
+                        }
+                    } catch (error) {
+                        console.error('處理 TS 片段時發生錯誤:', error);
+                        throw error;
+                    }
+                },
+
+                async convertToMP4(data, index) {
+                    return new Promise((resolve) => {
+                        const transmuxer = new muxjs.Transmuxer({
+                            keepOriginalTimestamps: true,
+                            duration: parseInt(this.durationSecond),
+                        });
+                        
+                        transmuxer.on('data', segment => {
+                            if (index === 0) {
+                                const data = new Uint8Array(segment.initSegment.byteLength + segment.data.byteLength);
+                                data.set(segment.initSegment, 0);
+                                data.set(segment.data, segment.initSegment.byteLength);
+                                resolve(data.buffer);
+                            } else {
+                                resolve(segment.data);
+                            }
+                        });
+                        
+                        transmuxer.push(new Uint8Array(data));
+                        transmuxer.flush();
+                    });
+                },
+
+                updateProgress(index, percent) {
+                    if (!this.downloadList[index]) {
+                        this.$set(this.downloadList, index, {
+                            id: index,
+                            title: `片段 ${index + 1}`,
+                            progress: 0
+                        });
+                    }
+                    this.$set(this.downloadList[index], 'progress', percent.toFixed(2));
+                },
+
+                async mergeAndDownload() {
+                    this.tips = '正在合併檔案...';
+                    
+                    const sortedData = Array.from(this.mediaCache.entries())
+                        .sort(([a], [b]) => a - b)
+                        .map(([_, value]) => value.data);
+                    
+                    try {
+                        const blob = new Blob(sortedData, { 
+                            type: this.isGetMP4 ? 'video/mp4' : 'video/MP2T' 
+                        });
+                        
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `video_${this.formatTime(this.beginTime)}${this.isGetMP4 ? '.mp4' : '.ts'}`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        
+                        this.mediaCache.clear();
+                        this.downloading = false;
+                        this.tips = 'M3U8 下載工具';
+                    } catch (error) {
+                        console.error('合併檔案時發生錯誤:', error);
+                        this.alertError('合併檔案時發生錯誤');
+                    }
+                },
+
+                formatTime(date) {
+                    return date.toISOString().slice(0, 19).replace(/[-:]/g, '');
+                },
+
+                applyURL(targetURL, baseURL) {
+                    try {
+                        return new URL(targetURL, baseURL).href;
+                    } catch {
+                        return targetURL;
+                    }
+                },
+
+                togglePause() {
+                    this.isPause = !this.isPause;
+                    if (!this.isPause) {
+                        this.processDownloadQueue();
+                    }
+                },
+
+                retry(index) {
+                    if (this.finishList[index].status === 'error') {
+                        this.finishList[index].status = '';
+                        this.downloadQueue.push(index);
+                        this.errorNum--;
+                        this.processDownloadQueue();
+                    }
+                },
+
+                resetState() {
+                    this.tsUrlList = [];
+                    this.finishList = [];
+                    this.downloadList = [];
+                    this.mediaFileList = [];
+                    this.mediaCache.clear();
+                    this.errorNum = 0;
+                    this.finishNum = 0;
+                    this.downloadIndex = 0;
+                    this.durationSecond = 0;
+                    this.downloadQueue = [];
+                    this.activeDownloads = 0;
+                },
+
+                cleanupResources() {
+                    for (let [key, value] of this.mediaCache) {
+                        if (value.status === 'finish') {
+                            this.mediaCache.delete(key);
+                        }
+                    }
+                },
+
+                alertError(message) {
+                    alert(message);
+                    this.downloading = false;
+                    this.tips = 'M3U8 下載工具';
+                }
+            }
+        });
+    </script>
+</body>
 </html>
