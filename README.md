@@ -1,6 +1,6 @@
 # m3u8 影片線上下載工具([English version](https://github.com/SAOJSM/m3u8-downloader-cht/blob/master/README-EN.md))
 
-### [線上工具網址](https://m3u8-downloader-cht.glitch.me)，推薦使用 chrome 瀏覽器。
+### [線上工具網址]((https://m3u8-download-cht.glitch.me)，推薦使用 Chrome 瀏覽器。
 
 ### 研發背景
 - m3u8影片格式簡介
@@ -109,7 +109,7 @@ async mergeAndDownload() {
 - 使用「mux-mp4.js」，來自 [mux.js](https://github.com/videojs/mux.js#mp4)
 
 ### 第三方接入
-- 在 url 中通過 source 參數拼接下載地址即可，如：```https://m3u8-downloader.glitch.me?source=https://example.com/video.m3u8```
+- 在 url 中通過 source 參數拼接下載地址即可，如：```https://m3u8-download-cht.glitch.me?source=https://example.com/video.m3u8```
 - 系統將自動解析該參數
 
 ### 完結撒花，感謝閱讀。
