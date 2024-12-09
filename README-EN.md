@@ -1,6 +1,6 @@
 # M3U8 Video Downloader
 
-### [Online Tool](https://m3u8-downloader-cht.glitch.me/index-en.html), Chrome browser is recommended.
+### [Online Tool](https://m3u8-download-cht.glitch.me/index-en.html), Chrome browser is recommended.
 
 ### Background
 - About M3U8 Video Format
