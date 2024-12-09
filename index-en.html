@@ -5,35 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>M3U8 Downloader</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-virtual-scroller@1.1.0/dist/vue-virtual-scroller.css">
-    <script>
-        // Auto inject cross-domain code
-        fetch = new Proxy(fetch, {
-            apply(target, that, args) {
-                const [url, options = {}] = args;
-                options.credentials = 'include';
-                options.mode = 'cors';
-                return target.apply(that, [url, options]);
-            }
-        });
-
-        // Inject XMLHttpRequest cross-domain support
-        XMLHttpRequest.prototype.setRequestHeader = new Proxy(XMLHttpRequest.prototype.setRequestHeader, {
-            apply(target, that, args) {
-                const [header, value] = args;
-                if (header === 'Origin') return;
-                return target.apply(that, args);
-            }
-        });
-
-        // Modify open method
-        XMLHttpRequest.prototype.open = new Proxy(XMLHttpRequest.prototype.open, {
-            apply(target, that, args) {
-                const [method, url, async = true, user, password] = args;
-                that.withCredentials = true;
-                return target.apply(that, [method, url, async, user, password]);
-            }
-        });
-    </script>
     <style>
         [v-cloak] {
             display: none;
@@ -150,6 +121,12 @@
             line-height: 20px;
             font-size: 12px;
         }
+        .cross-domain {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -166,6 +143,13 @@
                 <button class="btn" v-if="downloading" @click="togglePause">
                     {{ isPause ? 'Resume' : 'Pause' }}
                 </button>
+            </div>
+
+            <div class="cross-domain">
+                <button class="btn" @click="copyCode">Copy Cross-domain Code</button>
+                <p style="margin-top: 10px; color: #666;">
+                    If you encounter cross-domain issues, copy and paste this code into the browser console on the video page.
+                </p>
             </div>
 
             <div class="range-input" v-if="!downloading">
@@ -277,6 +261,45 @@
                 this.cleanupResources();
             },
             methods: {
+                copyCode() {
+                    const code = `
+                        // Modify fetch
+                        fetch = new Proxy(fetch, {
+                            apply(target, that, args) {
+                                const [url, options = {}] = args;
+                                options.credentials = 'include';
+                                options.mode = 'cors';
+                                return target.apply(that, [url, options]);
+                            }
+                        });
+
+                        // Modify XMLHttpRequest
+                        XMLHttpRequest.prototype.setRequestHeader = new Proxy(XMLHttpRequest.prototype.setRequestHeader, {
+                            apply(target, that, args) {
+                                const [header, value] = args;
+                                if (header === 'Origin') return;
+                                return target.apply(that, args);
+                            }
+                        });
+
+                        XMLHttpRequest.prototype.open = new Proxy(XMLHttpRequest.prototype.open, {
+                            apply(target, that, args) {
+                                const [method, url, async = true, user, password] = args;
+                                that.withCredentials = true;
+                                return target.apply(that, [method, url, async, user, password]);
+                            }
+                        });
+                    `;
+
+                    const textarea = document.createElement('textarea');
+                    textarea.value = code;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    alert('Cross-domain code copied! Please paste it into the browser console on the video page.');
+                },
+
                 getSource() {
                     const urlParams = new URLSearchParams(window.location.search);
                     const source = urlParams.get('source');

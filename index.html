@@ -150,6 +150,12 @@
             line-height: 20px;
             font-size: 12px;
         }
+        .cross-domain {
+            margin: 20px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -166,6 +172,13 @@
                 <button class="btn" v-if="downloading" @click="togglePause">
                     {{ isPause ? '繼續' : '暫停' }}
                 </button>
+            </div>
+
+            <div class="cross-domain">
+                <button class="btn" @click="copyCode">複製跨域代碼</button>
+                <p style="margin-top: 10px; color: #666;">
+                    如果遇到跨域問題，請將此代碼複製並貼到視頻頁面的瀏覽器控制台中執行。
+                </p>
             </div>
 
             <div class="range-input" v-if="!downloading">
@@ -579,6 +592,45 @@
                     alert(message);
                     this.downloading = false;
                     this.tips = 'M3U8 下載工具';
+                },
+
+                copyCode() {
+                    const code = `
+                        // 修改 fetch
+                        fetch = new Proxy(fetch, {
+                            apply(target, that, args) {
+                                const [url, options = {}] = args;
+                                options.credentials = 'include';
+                                options.mode = 'cors';
+                                return target.apply(that, [url, options]);
+                            }
+                        });
+
+                        // 修改 XMLHttpRequest
+                        XMLHttpRequest.prototype.setRequestHeader = new Proxy(XMLHttpRequest.prototype.setRequestHeader, {
+                            apply(target, that, args) {
+                                const [header, value] = args;
+                                if (header === 'Origin') return;
+                                return target.apply(that, args);
+                            }
+                        });
+
+                        XMLHttpRequest.prototype.open = new Proxy(XMLHttpRequest.prototype.open, {
+                            apply(target, that, args) {
+                                const [method, url, async = true, user, password] = args;
+                                that.withCredentials = true;
+                                return target.apply(that, [method, url, async, user, password]);
+                            }
+                        });
+                    `;
+
+                    const textarea = document.createElement('textarea');
+                    textarea.value = code;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    alert('跨域代碼已複製！請將其貼到視頻頁面的瀏覽器控制台中執行。');
                 }
             }
         });
